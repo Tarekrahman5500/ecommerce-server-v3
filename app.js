@@ -7,7 +7,8 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import {ServerApiVersion} from 'mongodb'
 import errorHandler from './public/javascripts/error'
-
+import userRouter from './routes/users'
+import authRouter from './routes/auth'
 const port = process.env.PORT || 5000
 const app = express();
 const api = process.env.API_URL || 'http://127.0.0.1:5173'
@@ -39,6 +40,9 @@ app.use(express.static(path.join(__dirname, 'public')));
         console.log('Failed to connect to MongoDB', err);
     }
 })().catch(console.dir)
+
+app.use("/api/user", userRouter)
+app.use("/api/auth", authRouter)
 
 app.use(errorHandler)
 
